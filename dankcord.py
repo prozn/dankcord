@@ -9,25 +9,23 @@ config = configparser.SafeConfigParser()
 
 def launchesi(configpath="."):
 	global app, security, esi
-
 	config.read("%s/config.ini" % configpath)
-
-    app = App.create(url="https://esi.tech.ccp.is/latest/swagger.json?datasource=tranquility")
+	app = App.create(url="https://esi.tech.ccp.is/latest/swagger.json?datasource=tranquility")
 	security = EsiSecurity(
 	    app=app,
 	    redirect_uri='http://localhost/oauth-callback', # This doesnt matter
 	    client_id=config.get('esi','client_id'),
 	    secret_key=config.get('esi','secret_key'),
 	)
-    esi = EsiClient(
-        retry_requests=True,  # set to retry on http 5xx error (default False)
-        header={'User-Agent': 'Discord bot by Prozn: https://github.com/prozn/dankcord'},
-        security=security
-    )
-    security.update_token({
-	    'access_token': '',  # leave this empty
-	    'expires_in': -1,  # seconds until expiry, so we force refresh anyway
-	    'refresh_token': config.get('esi','refresh_token')
+	esi = EsiClient(
+		retry_requests=True,  # set to retry on http 5xx error (default False)
+		header={'User-Agent': 'Discord bot by Prozn: https://github.com/prozn/dankcord'},
+		security=security
+	)
+	security.update_token({
+		'access_token': '',  # leave this empty
+		'expires_in': -1,  # seconds until expiry, so we force refresh anyway
+		'refresh_token': config.get('esi','refresh_token')
 	})
 	security.refresh()
 
@@ -50,7 +48,6 @@ def startbot():
 	    	contracts = client.request(op)
 	    	print contracts.data
 	    	await client.send_message(message.channel, 'Printed contracts data to console...')
-	        
 
 	client.run('NDU2MTg0NzQ1NTYzMzg5OTUz.DgG2qw.uo1GvEdehKFJ_2nLjDklkcOhu_0')
 
