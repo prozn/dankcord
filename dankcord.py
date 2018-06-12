@@ -1,6 +1,8 @@
 import discord
 import asyncio
 import configparser
+import logging
+import logging.handlers
 from esipy import App
 from esipy import EsiClient
 from esipy import EsiSecurity
@@ -45,13 +47,18 @@ def startbot():
 	    	op = app.op['get_corporations_corporation_id_contracts'](
 	    		corporation_id=config.get('corporation','corporation_id')
 	    	)
-	    	contracts = client.request(op)
+	    	contracts = app.request(op)
 	    	print(contracts.data)
 	    	await client.send_message(message.channel, 'Printed contracts data to console...')
 
 	client.run('NDU2MTg0NzQ1NTYzMzg5OTUz.DgG2qw.uo1GvEdehKFJ_2nLjDklkcOhu_0')
 
 if __name__ == '__main__':
+    logger = logging.getLogger()
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(console)
+
 	launchesi()
 	startbot()
 
