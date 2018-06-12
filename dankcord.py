@@ -57,6 +57,8 @@ if __name__ == '__main__':
     logger = logging.getLogger()
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     logger.setLevel(logging.DEBUG)
+    console = logging.StreamHandler()
+    console.setFormatter(formatter)
     logger.addHandler(console)
 
     launchesi()
