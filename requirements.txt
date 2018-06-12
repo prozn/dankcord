@@ -1,0 +1,2 @@
+discord.py==0.16.0
+EsiPy==0.1.8
