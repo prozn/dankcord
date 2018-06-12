@@ -47,7 +47,7 @@ def startbot():
             op = app.op['get_corporations_corporation_id_contracts'](
                 corporation_id=config.get('corporation','corporation_id')
             )
-            contracts = app.request(op)
+            contracts = esi.request(op)
             print(contracts.data)
             await client.send_message(message.channel, 'Printed contracts data to console...')
 
