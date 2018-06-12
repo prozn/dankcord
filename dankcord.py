@@ -42,7 +42,7 @@ def startbot():
 	@client.event
 	async def on_message(message):
 	    if message.content.startswith('!contracts'):
-	    	op = app.op['get_corporations_corporation_id_contracts_ok'](
+	    	op = app.op['get_corporations_corporation_id_contracts'](
 	    		corporation_id=config.get('corporation','corporation_id')
 	    	)
 	    	contracts = client.request(op)
