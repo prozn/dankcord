@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import time
 from esipy import EsiApp
 from esipy import EsiClient
 from esipy import EsiSecurity
@@ -46,8 +47,8 @@ def get_contracts():
     contracts = esi.request(op)
     for contract in contracts.data:
         contract['iskm3'] = contract.reward / contract.volume
-        print(contract);
-        #print("{contract_id} -- {date_issued} -- {volume} -- {reward} ({iskm3})".format(contract))
+        #print(contract);
+        print("{contract_id} -- {date_issued} -- {volume} -- {reward} ({iskm3})".format(**vars(contract)))
     return True
 
 if __name__ == '__main__':
