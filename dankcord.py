@@ -32,41 +32,35 @@ def launchesi(configpath="."):
     })
     security.refresh()
 
-class Dankcord(discord.Client):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.bg_task_contracts = self.loop.create_task(self.get_contracts())
+def startbot():
+    command_prefix='!'
+    bot = commands.Bot(command_prefix)
 
-    async def on_ready(self):
-        print('Logged in as')
-        print(self.user.name)
-        print(self.user.id)
-        print('------')
-        self.ping_channel_id = discord.utils.get(self.get_all_channels(), guild__name='BBW.', name='test')
-        print('Using ping channel id %s' % format(self.ping_channel_id))
-        print('------')
-
-    async def get_contracts(self):
-        await self.wait_until_ready()
-        channel = self.get_channel(self.ping_channel_id) # channel ID goes here
-        while not self.is_closed():
-            await channel.send("this would be a message if there were new contracts")
+    async def get_contracts():
+        await bot.wait_until_ready()
+        channel_id = discord.utils.get(bot.get_all_channels(), guild__name='BBW.', name='test')
+        channel = discord.Object(id=channel_id)
+        while not bot.is_closed:
+            await bot.send_message(channel, 'This would be a new contract alert')
             await asyncio.sleep(60) # task runs every 60 seconds
 
-    async def on_message(self, message):
-        if message.content.startswith('!contracts'):
-            await self.respond_contracts(message)
+    @bot.event
+    async def on_ready():
+        print('Logged in as')
+        print(bot.user.name)
+        print(bot.user.id)
+        print('------')
 
-    async def respond_contracts(message):
+    @bot.command()
+    async def contracts(ctx):
         op = app.op['get_corporations_corporation_id_contracts'](
             corporation_id=config.get('corporation','corporation_id')
         )
         contracts = esi.request(op)
         print(contracts.data)
-        await message.channel.send('Printed contracts data to console...')
+        await ctx.send('Printed contracts data to console...')
 
-def startbot():
-    bot = Dankcord()
+    bot.loop.create_task(get_contracts())
     bot.run(config.get('discord','bot_token'))
 
 if __name__ == '__main__':
