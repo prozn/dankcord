@@ -1,4 +1,5 @@
 import discord
+from discord.ext import commands
 import asyncio
 import configparser
 import logging
@@ -32,26 +33,27 @@ def launchesi(configpath="."):
     security.refresh()
 
 def startbot():
-    client = discord.Client()
+    command_prefix='!'
+    bot = commands.Bot(command_prefix)
 
-    @client.event
+    @bot.event
     async def on_ready():
         print('Logged in as')
-        print(client.user.name)
-        print(client.user.id)
+        print(bot.user.name)
+        print(bot.user.id)
         print('------')
 
-    @client.event
-    async def on_message(message):
+    @bot.command()
+    async def contracts(ctx):
         if message.content.startswith('!contracts'):
             op = app.op['get_corporations_corporation_id_contracts'](
                 corporation_id=config.get('corporation','corporation_id')
             )
             contracts = esi.request(op)
             print(contracts.data)
-            await client.send_message(message.channel, 'Printed contracts data to console...')
+        await ctx.send('Printed contracts data to console...')
 
-    client.run(config.get('discord','bot_token'))
+    bot.run(config.get('discord','bot_token'))
 
 if __name__ == '__main__':
     logger = logging.getLogger()
