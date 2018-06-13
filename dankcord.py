@@ -45,7 +45,7 @@ def startbot():
         channel = discord.Object(id=channel_id)
         while not bot.is_closed():
             print("Sending message...")
-            await bot.send_message(channel, 'This would be a new contract alert')
+            await channel.send('This would be a new contract alert')
             await asyncio.sleep(60) # task runs every 60 seconds
 
     @bot.event
