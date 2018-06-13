@@ -37,6 +37,7 @@ def startbot():
     bot = commands.Bot(command_prefix)
 
     async def get_contracts():
+        print("I'm in the get contracts function")
         await bot.wait_until_ready()
         channel_id = discord.utils.get(bot.get_all_channels(), guild__name='BBW.', name='test')
         channel = discord.Object(id=channel_id)
@@ -66,10 +67,13 @@ def startbot():
 if __name__ == '__main__':
     logger = logging.getLogger()
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(logging.WARNING) #DEBUG)
     console = logging.StreamHandler()
     console.setFormatter(formatter)
     logger.addHandler(console)
 
+    print('Loading ESI')
     launchesi()
+    print('ESI loaded, starting bot')
     startbot()
+    print('Bot has ended....')
