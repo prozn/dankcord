@@ -51,7 +51,7 @@ def startbot():
             print(contracts.data)
             await client.send_message(message.channel, 'Printed contracts data to console...')
 
-    client.run('NDU2MTg0NzQ1NTYzMzg5OTUz.DgG2qw.uo1GvEdehKFJ_2nLjDklkcOhu_0')
+    client.run(config.get('discord','bot_token'))
 
 if __name__ == '__main__':
     logger = logging.getLogger()

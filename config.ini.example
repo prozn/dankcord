@@ -1,3 +1,6 @@
+[discord]
+bot_token=
+
 [esi]
 client_id=
 secret_key=
