@@ -46,7 +46,8 @@ def get_contracts():
     contracts = esi.request(op)
     for contract in contracts.data:
         contract['iskm3'] = contract.reward / contract.volume
-        print("{contract_id} -- {date_issued} -- {volume} -- {reward} ({iskm3})".format(contract))
+        print(contract);
+        #print("{contract_id} -- {date_issued} -- {volume} -- {reward} ({iskm3})".format(contract))
     return True
 
 if __name__ == '__main__':
