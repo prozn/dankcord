@@ -7,6 +7,7 @@ import logging.handlers
 from esipy import EsiApp
 from esipy import EsiClient
 from esipy import EsiSecurity
+from esipy.cache import FileCache
 
 config = configparser.SafeConfigParser()
 
@@ -14,7 +15,8 @@ def launchesi(configpath="."):
     global app, security, esi
     config.read("%s/config.ini" % configpath)
     # app = App.create(url="https://esi.tech.ccp.is/latest/swagger.json?datasource=tranquility")
-    esi_app = EsiApp()
+    cache = FileCache(path=config.get('esi','cache'))
+    esi_app = EsiApp(cache=cache)
     app = esi_app.get_latest_swagger
     security = EsiSecurity(
         app=app,
