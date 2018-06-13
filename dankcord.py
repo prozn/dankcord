@@ -40,7 +40,6 @@ def startbot():
         print(client.user.name)
         print(client.user.id)
         print('------')
-        client.change_nickname(client.server.me,"DHL Bot")
 
     @client.event
     async def on_message(message):
