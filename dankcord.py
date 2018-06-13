@@ -66,7 +66,7 @@ class Dankcord(discord.Client):
         await message.channel.send('Printed contracts data to console...')
 
 def startbot():
-    bot = MyClient()
+    bot = Dankcord()
     bot.run(config.get('discord','bot_token'))
 
 if __name__ == '__main__':
