@@ -43,8 +43,6 @@ def startbot():
         guild = discord.utils.get(bot.guilds, name='BBW.')
         if guild is not None:
             channel = discord.utils.get(guild.text_channels, name='test')
-            print("Got channel id %s" % channel_id)        
-            channel = discord.Object(id=channel_id)
             while not bot.is_closed():
                 print("Sending message...")
                 await channel.send('This would be a new contract alert')
