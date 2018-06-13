@@ -32,26 +32,41 @@ def launchesi(configpath="."):
     })
     security.refresh()
 
-def startbot():
-    command_prefix='!'
-    bot = commands.Bot(command_prefix)
+class Dankcord(discord.Client):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.bg_task_contracts = self.loop.create_task(self.get_contracts())
 
-    @bot.event
-    async def on_ready():
+    async def on_ready(self):
         print('Logged in as')
-        print(bot.user.name)
-        print(bot.user.id)
+        print(self.user.name)
+        print(self.user.id)
+        print('------')
+        self.ping_channel_id = discord.utils.get(client.get_all_channels(), guild__name='BBW.', name='test')
+        print('Using ping channel id %s' % format(self.ping_channel_id))
         print('------')
 
-    @bot.command()
-    async def contracts(ctx):
+    async def get_contracts(self):
+        await self.wait_until_ready()
+        channel = self.get_channel(self.ping_channel_id) # channel ID goes here
+        while not self.is_closed():
+            await channel.send("this would be a message if there were new contracts")
+            await asyncio.sleep(60) # task runs every 60 seconds
+
+    async def on_message(self, message):
+        if message.content.startswith('!contracts'):
+            await self.respond_contracts(message)
+
+    async def respond_contracts(message):
         op = app.op['get_corporations_corporation_id_contracts'](
             corporation_id=config.get('corporation','corporation_id')
         )
         contracts = esi.request(op)
         print(contracts.data)
-        await ctx.send('Printed contracts data to console...')
+        await message.channel.send('Printed contracts data to console...')
 
+def startbot():
+    bot = MyClient()
     bot.run(config.get('discord','bot_token'))
 
 if __name__ == '__main__':
