@@ -24,7 +24,7 @@ def start(configpath="."):
     )
     esi = EsiClient(
         retry_requests=True,  # set to retry on http 5xx error (default False)
-        header={'User-Agent': 'Discord bot by Prozn: https://github.com/prozn/dankcord'},
+        headers={'User-Agent': 'Discord bot by Prozn: https://github.com/prozn/dankcord'},
         security=security
     )
     security.update_token({
