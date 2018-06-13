@@ -40,6 +40,7 @@ def startbot():
         print(client.user.name)
         print(client.user.id)
         print('------')
+        client.user.setUsername("DHL Bot")
 
     @client.event
     async def on_message(message):
