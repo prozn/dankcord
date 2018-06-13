@@ -42,7 +42,7 @@ class Dankcord(discord.Client):
         print(self.user.name)
         print(self.user.id)
         print('------')
-        self.ping_channel_id = discord.utils.get(client.get_all_channels(), guild__name='BBW.', name='test')
+        self.ping_channel_id = discord.utils.get(self.get_all_channels(), guild__name='BBW.', name='test')
         print('Using ping channel id %s' % format(self.ping_channel_id))
         print('------')
 
