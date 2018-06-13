@@ -45,12 +45,11 @@ def startbot():
 
     @bot.command()
     async def contracts(ctx):
-        if message.content.startswith('!contracts'):
-            op = app.op['get_corporations_corporation_id_contracts'](
-                corporation_id=config.get('corporation','corporation_id')
-            )
-            contracts = esi.request(op)
-            print(contracts.data)
+        op = app.op['get_corporations_corporation_id_contracts'](
+            corporation_id=config.get('corporation','corporation_id')
+        )
+        contracts = esi.request(op)
+        print(contracts.data)
         await ctx.send('Printed contracts data to console...')
 
     bot.run(config.get('discord','bot_token'))
