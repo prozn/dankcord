@@ -43,7 +43,7 @@ def startbot():
         channel_id = discord.utils.get(bot.get_all_channels(), guild__name='BBW.', name='test')
         print("Got channel id %s" % channel_id)
         channel = discord.Object(id=channel_id)
-        while not bot.is_closed:
+        while not bot.is_closed():
             print("Sending message...")
             await bot.send_message(channel, 'This would be a new contract alert')
             await asyncio.sleep(60) # task runs every 60 seconds
