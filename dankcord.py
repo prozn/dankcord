@@ -13,7 +13,9 @@ config = configparser.SafeConfigParser()
 def launchesi(configpath="."):
     global app, security, esi
     config.read("%s/config.ini" % configpath)
-    app = App.create(url="https://esi.tech.ccp.is/latest/swagger.json?datasource=tranquility")
+    # app = App.create(url="https://esi.tech.ccp.is/latest/swagger.json?datasource=tranquility")
+    esi_app = EsiApp()
+    app = esi_app.get_latest_swagger
     security = EsiSecurity(
         app=app,
         redirect_uri='http://localhost/oauth-callback', # This doesnt matter
