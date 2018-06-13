@@ -14,7 +14,6 @@ config = configparser.SafeConfigParser()
 def launchesi(configpath="."):
     global app, security, esi
     config.read("%s/config.ini" % configpath)
-    # app = App.create(url="https://esi.tech.ccp.is/latest/swagger.json?datasource=tranquility")
     cache = FileCache(path=config.get('esi','cache'))
     esi_app = EsiApp(cache=cache)
     app = esi_app.get_latest_swagger
