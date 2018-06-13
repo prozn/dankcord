@@ -48,7 +48,7 @@ def get_contracts():
     for contract in contracts.data:
         contract['iskm3'] = contract.reward / contract.volume
         #print(contract);
-        print("%s -- %s -- %s -- %s (%s)" % (contract.contract_id, contract.date_issued, contract.volume, contract.reward, contract.iskm3))
+        print("%s : %s -- %s -- %s -- %s (%s)" % (contract.type, contract.contract_id, contract.date_issued, contract.volume, contract.reward, contract.iskm3))
     return True
 
 if __name__ == '__main__':
