@@ -34,10 +34,10 @@ def start(configpath="."):
     security.refresh()
 
     while True:
-    	if get_contracts():
-    		time.sleep(60)
-    	else:
-    		time.sleep(1)
+        if get_contracts():
+            time.sleep(60)
+        else:
+            time.sleep(1)
 
 def get_contracts():
     op = app.op['get_corporations_corporation_id_contracts'](
@@ -45,9 +45,9 @@ def get_contracts():
     )
     contracts = esi.request(op)
     for contract in contracts:
-    	contract['iskm3'] = contract.reward / contract.volume
-    	print("{contract_id} -- {date_issued} -- {volume} -- {reward} ({iskm3})".format(contract))
-	return True
+        contract['iskm3'] = contract.reward / contract.volume
+        print("{contract_id} -- {date_issued} -- {volume} -- {reward} ({iskm3})".format(contract))
+    return True
 
 if __name__ == '__main__':
-	start()
+    start()
