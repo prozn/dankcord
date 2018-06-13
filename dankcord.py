@@ -40,13 +40,17 @@ def startbot():
         print("I'm in the get contracts function")
         await bot.wait_until_ready()
         print("Bot is ready")
-        channel_id = discord.utils.get(bot.get_all_channels(), guild__name='BBW.', name='test')
-        print("Got channel id %s" % channel_id)
-        channel = discord.Object(id=channel_id)
-        while not bot.is_closed():
-            print("Sending message...")
-            await channel.send('This would be a new contract alert')
-            await asyncio.sleep(60) # task runs every 60 seconds
+        guild = discord.utils.get(bot.guilds, name='BBW.')
+        if guild is not None:
+            channel = discord.utils.get(guild.text_channels, name='test')
+            print("Got channel id %s" % channel_id)        
+            channel = discord.Object(id=channel_id)
+            while not bot.is_closed():
+                print("Sending message...")
+                await channel.send('This would be a new contract alert')
+                await asyncio.sleep(60) # task runs every 60 seconds
+        else:
+            print("Couldn't find server, not starting contracts task. You should probably fix this.")
 
     @bot.event
     async def on_ready():
