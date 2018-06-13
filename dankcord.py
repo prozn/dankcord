@@ -4,7 +4,7 @@ import asyncio
 import configparser
 import logging
 import logging.handlers
-from esipy import App
+from esipy import EsiApp
 from esipy import EsiClient
 from esipy import EsiSecurity
 
