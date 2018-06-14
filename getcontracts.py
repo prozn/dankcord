@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import time
+import pony
 from esipy import EsiApp
 from esipy import EsiClient
 from esipy import EsiSecurity
@@ -44,7 +45,8 @@ def get_contracts():
     op = app.op['get_corporations_corporation_id_contracts'](
         corporation_id=config.get('corporation','corporation_id')
     )
-    contracts = esi.request(op)
+    contracts = esi.request(op,raise_on_error=True)
+    if contracts.
     for contract in contracts.data:
         contract['iskm3'] = contract.reward / contract.volume
         #print(contract);
