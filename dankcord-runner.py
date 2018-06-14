@@ -1,5 +1,5 @@
 #!/usr/bin/env python
 from dankcord.dankcord import main
 
-if __name_ '__main__':
+if __name__ == '__main__':
 	main()
