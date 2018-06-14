@@ -12,14 +12,14 @@ def main():
     console = logging.StreamHandler()
     console.setFormatter(formatter)
     logger.addHandler(console)
-    if sys.argv[1] = "startbot":
+    if sys.argv[1] == "startbot":
         from .dankbot import launchesi
         from .dankbot import startbot
         print('Loading ESI')
         launchesi()
         print('ESI loaded, starting bot')
         startbot()
-    elif sys.argv[1] = "esiupdate":
+    elif sys.argv[1] == "esiupdate":
         from .esiupdate import start
         print('Starting esi update service')
         start()
