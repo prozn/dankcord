@@ -46,7 +46,6 @@ def get_contracts():
         corporation_id=config.get('corporation','corporation_id')
     )
     contracts = esi.request(op,raise_on_error=True)
-    if contracts.
     for contract in contracts.data:
         contract['iskm3'] = contract.reward / contract.volume
         #print(contract);
