@@ -25,4 +25,15 @@ setup(
     author = "Prozn Zanjoahir",
     author_email = "prozn@quickmind.co.uk",
     url = "https://github.com/prozn/dankcord",
+ 
+    install_requires=[
+        'discord.py',
+        'EsiPy>=0.1.8',
+        'pony>=0.7.3',
+        'diskcache>=3.0.6'
+    ],
+ 
+    dependency_links=[
+        'git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py-1'
+    ],
     )
