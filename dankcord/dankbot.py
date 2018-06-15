@@ -47,7 +47,7 @@ def startbot():
             while not bot.is_closed():
                 print("Sending message...")
                 await channel.send('This would be a new contract alert')
-                await asyncio.sleep(60) # task runs every 60 seconds
+                await asyncio.sleep(300) # task runs every 60 seconds
         else:
             print("Couldn't find server, not starting contracts task. You should probably fix this.")
 
@@ -66,6 +66,15 @@ def startbot():
         contracts = esi.request(op)
         print(contracts.data)
         await ctx.send('Printed contracts data to console...')
+
+    @bot.command()
+    async def askdrake(ctx):
+        from random import randint
+        if randint(1,2) == 1:
+            await ctx.send(':drakeyes:')
+        else:
+            await ctx.send(':drakeno:')
+
 
     bot.loop.create_task(get_contracts())
     bot.run(config.get('discord','bot_token'))
