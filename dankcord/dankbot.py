@@ -73,9 +73,9 @@ def startbot():
         emojis = bot.emojis
         print(emojis)
         if randint(1,2) == 1:
-            await ctx.send(':drakeyes:')
+            await ctx.send(discord.utils.get(emojis, name='drakeyes'))
         else:
-            await ctx.send(':drakeno:')
+            await ctx.send(discord.utils.get(emojis, name='drakeno'))
 
 
     bot.loop.create_task(get_contracts())
