@@ -65,11 +65,13 @@ def startbot():
         )
         contracts = esi.request(op)
         print(contracts.data)
-        await ctx.send('Printed contracts data to console...')
+        #await ctx.send('Printed contracts data to console...')
 
     @bot.command()
     async def askdrake(ctx):
         from random import randint
+        emojis = ctx.guild.get_all_emojis()
+        print(emojis)
         if randint(1,2) == 1:
             await ctx.send(':drakeyes:')
         else:
