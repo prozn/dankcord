@@ -46,7 +46,7 @@ def startbot():
             channel = discord.utils.get(guild.text_channels, name='test')
             while not bot.is_closed():
                 print("Sending message...")
-                await channel.send('This would be a new contract alert')
+                #await channel.send('This would be a new contract alert')
                 await asyncio.sleep(300) # task runs every 60 seconds
         else:
             print("Couldn't find server, not starting contracts task. You should probably fix this.")
@@ -70,7 +70,7 @@ def startbot():
     @bot.command()
     async def askdrake(ctx):
         from random import randint
-        emojis = ctx.guild.get_all_emojis()
+        emojis = ctx.client.emojis()
         print(emojis)
         if randint(1,2) == 1:
             await ctx.send(':drakeyes:')
