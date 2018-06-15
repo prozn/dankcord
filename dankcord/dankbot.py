@@ -70,7 +70,7 @@ def startbot():
     @bot.command()
     async def askdrake(ctx):
         from random import randint
-        emojis = bot.client.emojis()
+        emojis = bot.emojis()
         print(emojis)
         if randint(1,2) == 1:
             await ctx.send(':drakeyes:')
