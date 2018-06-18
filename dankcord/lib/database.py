@@ -8,8 +8,8 @@ DB.bind(provider='sqlite', filename='database.sqlite', create_db=True)
 
 class Contract(DB.Entity):
 	contract_id = PrimaryKey(int)
-	acceptor_id = Optional(float) # monitor for changes
-	assignee_id = Optional(float) 
+	acceptor_id = Optional(long) # monitor for changes
+	assignee_id = Optional(long) 
 	availability = Required(str,50) # filter = "personal" only
 	collateral = Optional(Decimal, 20, 2)
 	date_accepted = Optional(datetime)
@@ -17,13 +17,13 @@ class Contract(DB.Entity):
 	date_expired = Optional(datetime)
 	date_issued = Required(datetime)
 	days_to_complete = Optional(int)
-	end_location_id = Optional(float)
+	end_location_id = Optional(long)
 	for_corporation = Optional(bool)
-	issuer_corporation_id = Optional(float)
-	issuer_id = Optional(float)
+	issuer_corporation_id = Optional(long)
+	issuer_id = Optional(long)
 	price = Optional(Decimal, 20, 2)
 	reward = Optional(Decimal, 20, 2)
-	start_location_id = Optional(float)
+	start_location_id = Optional(long)
 	status = Optional(str,50) # monitor for changes
 	title = Optional(str,255)
 	contract_type = Required(str, 50) # filter = "courier" only
