@@ -84,10 +84,8 @@ def add_message(contract_id,reason):
 @db_session
 def pop_message():
 	mess = Message.select(lambda m: m.sent == False).order_by(lambda m: m.id)[:1]
-	print('Number of entries: %s' % len(mess))
-	print(mess[0].to_dict(related_objects=True))
 	if len(mess) > 0:
-		item = mess[0].to_dict(related_objects=True)
+		item = mess[0].to_dict(related_objects=True, with_collections=True)
 		Message[mess[0].id].set(sent=True)
 		return item
 	else:
