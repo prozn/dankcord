@@ -135,7 +135,7 @@ def get_or_create_charcorp(esi_instance,id):
 	except ObjectNotFound:
 		charname = esi_instance.id_name(id)
 		CharCorp(id=id, name=charname)
-		return Character[character_id].to_dict()
+		return CharCorp[character_id].to_dict()
 
 @db_session
 def get_or_create_location(esi_instance,location_id):
