@@ -39,6 +39,7 @@ def get_contracts(corp):
                     newcontract[k] = v
             print(newcontract)
             check_contract(newcontract)
+            return True
 
 def check_contract(contract):
     new_contract = False
