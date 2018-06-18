@@ -28,12 +28,12 @@ class ESI:
             headers={'User-Agent': 'Discord bot by Prozn: https://github.com/prozn/dankcord'},
             security=self.security
         )
-        security.update_token({
+        self.security.update_token({
             'access_token': '',  # leave this empty
             'expires_in': -1,  # seconds until expiry, so we force refresh anyway
             'refresh_token': self.refresh_token
         })
-        security.refresh()
+        self.security.refresh()
 
     def character_info(self, character_id):
         op = self.app.op['get_characters_character_id'](
