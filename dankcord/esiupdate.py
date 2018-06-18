@@ -29,7 +29,8 @@ def get_contracts(corp):
     #print(contracts)
     for contract in contracts:
         if contract.type == 'courier': # we only care about courier contracts
-            contract.__dict__['contract_type'] = contract.__dict__.pop('type')
+            contract['contract_type'] = contract['type']
+            del contract['type']
             print(contract)
             check_contract(contract)
 

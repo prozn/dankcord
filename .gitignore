@@ -4,6 +4,9 @@ config.ini
 #cache
 cache/
 
+#database
+*.sqlite
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
