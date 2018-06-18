@@ -45,28 +45,28 @@ def check_contract(contract):
     if not contract_status(contract['contract_id']):
         print('Contract not found in database, inserting...')
         add_contract(contract) # contract does not exist in the database, insert it
-        if contract.status not in list('finished_issuer','finished_contractor','finished','cancelled','deleted'):
+        if contract['status'] not in list('finished_issuer','finished_contractor','finished','cancelled','deleted'):
             print('New unfinished contract, sending new message')
             new_contract = True
-            add_message(contract.contract_id,'NEW')
+            add_message(contract['contract_id'],'NEW')
     
-    if new_contract or contract_status(contract) != contract.status:
+    if new_contract or contract_status(contract['contract_id']) != contract['status']:
         # status of the contract has changed - work out what!
-        if contract.status == 'in_progress':
+        if contract['status'] == 'in_progress':
             print('Sending accepted message...')
-            add_message(contract.contract_id, 'ACCEPTED')
-        elif contract.status in list ('finished_issuer','finished_contractor','finished'):
+            add_message(contract['contract_id'], 'ACCEPTED')
+        elif contract['status'] in list ('finished_issuer','finished_contractor','finished'):
             print('Sending completed message...')
-            add_message(contract.contract_id, 'COMPLETED')
-        elif contract.status in list('cancelled','deleted'):
+            add_message(contract['contract_id'], 'COMPLETED')
+        elif contract['status'] in list('cancelled','deleted'):
             print('Sending deleted message...')
-            add_message(contract.contract_id, 'DELETED')
-        elif contract.status == 'rejected':
+            add_message(contract['contract_id'], 'DELETED')
+        elif contract['status'] == 'rejected':
             print('Sending rejected message...')
-            add_message(contract.contract_id, 'REJECTED')
-        elif contract.status == 'failed':
+            add_message(contract['contract_id'], 'REJECTED')
+        elif contract['status'] == 'failed':
             print('Sending failed message...')
-            add_message(contract.contract_id, 'FAILED')
+            add_message(contract['contract_id'], 'FAILED')
 
         print('Updating contract in database')
         update_contract(contract)
