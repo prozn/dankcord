@@ -24,7 +24,7 @@ def start(configpath="."):
         else:
             time.sleep(1)
 
-def get_contracts(corp):
+def get_contracts():
     contracts = corp.esi.corp_contracts(config.get('corporation','corporation_id'))
     for contract in contracts.data:
         print(contract)
