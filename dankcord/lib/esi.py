@@ -21,6 +21,7 @@ class ESI:
         self.security = EsiSecurity(
             app=self.app,
             redirect_uri='http://localhost/oauth-callback', # This doesnt matter
+            headers={'User-Agent': 'Discord bot by Prozn: https://github.com/prozn/dankcord'},
             client_id=self.client_id,
             secret_key=self.secret_key,
         )
@@ -47,12 +48,15 @@ class ESI:
         character = self.character_info(character_id)
         return character.name
 
-    async def corp_contracts(self, corporation_id):
+    async def corp_contracts(self, corporation_id, raw=False):
         op = self.app.op['get_corporations_corporation_id_contracts'](
             corporation_id=corporation_id
         )
-        contracts = self.esi.request(op,raise_on_error=True)
-        return contracts
+        contracts = self.esi.request(op,raise_on_error=True, raw_body_only=raw)
+        if raw:
+            return contracts.raw
+        else:
+            return contracts.data
 
     async def personal_contracts(self):
         raise NotImplementedError

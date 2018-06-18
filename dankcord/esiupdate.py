@@ -27,7 +27,7 @@ def start(configpath="."):
 def get_contracts(corp):
     contracts = corp.corp_contracts(config.get('corporation','corporation_id'))
     print(contracts)
-    for contract in contracts.data:
+    for contract in contracts:
         if contract.type == 'courier': # we only care about courier contracts
             contract.contract_type = contract.type
             del contract.type
