@@ -37,18 +37,18 @@ class ESI:
         })
         self.security.refresh()
 
-    async def character_info(self, character_id):
+    def character_info(self, character_id):
         op = self.app.op['get_characters_character_id'](
             character_id=character_id
         )
         character = self.esi.request(op,raise_on_error=True)
         return character
 
-    async def character_name(self, character_id):
+    def character_name(self, character_id):
         character = self.character_info(character_id)
         return character.name
 
-    async def corp_contracts(self, corporation_id, raw=False):
+    def corp_contracts(self, corporation_id, raw=False):
         op = self.app.op['get_corporations_corporation_id_contracts'](
             corporation_id=corporation_id
         )
@@ -58,5 +58,5 @@ class ESI:
         else:
             return contracts.data
 
-    async def personal_contracts(self):
+    def personal_contracts(self):
         raise NotImplementedError
