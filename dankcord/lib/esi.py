@@ -80,7 +80,7 @@ class ESI:
         details = {
             location_id: location_id,
             location_type: location_type,
-            system_id: location.data.system_id,
+            system_id: location.data['system_id'],
             name: location.data.name
         }
         return details
