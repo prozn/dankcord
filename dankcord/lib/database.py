@@ -145,7 +145,7 @@ def get_or_create_location(esi_instance,location_id):
 	except ObjectNotFound:
 		loc = esi_instance.location_details(location_id)
 		Location(location_id=location_id, name=loc['name'], system_id=loc['system_id'])
-		get_or_create_system(loc['system_id'])
+		get_or_create_system(esi_instance,loc['system_id'])
 		return Location[location_id].to_dict()
 
 @db_session
