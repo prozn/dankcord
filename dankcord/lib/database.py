@@ -37,6 +37,19 @@ class Message(DB.Entity):
 	reason = Required(str, 50)  # NEW, ACCEPTED, EXPIRING_SOON, COMPLETED, FAILED, REJECTED, DELETED
 	sent = Required(bool,default=False)
 
+class Character(DB.Entity):
+	character_id = PrimaryKey(int)
+	name = Required(str,255)
+
+class Location(DB.Entity):
+	location_id = PrimaryKey(int, size=64)
+	name = Required(str,255)
+	system_id = Required(int, size=64)
+
+class System(DB.Entity):
+	system_id = PrimaryKey(int)
+	name = Required(str,255)
+
 DB.generate_mapping(create_tables=True)
 
 @db_session
@@ -90,4 +103,70 @@ def pop_message():
 		Message[mess[0].id].set(sent=True)
 		return [item,cont]
 	else:
+		return False
+
+@db_session
+def get_character_name(character_id):
+	try:
+		char = Character[character_id]
+		return char.name
+	except ObjectNotFound:
+		return 'Unknown Character'
+
+def get_location_name(location_id):
+	try:
+		loc = Location[location_id]
+		return loc.name
+	except ObjectNotFound:
+		return 'Unknown Structure'
+
+def get_system_name(system_id):
+	try:
+		system = System[system_id]
+		return system.name
+	except ObjectNotFound:
+		return 'Unknown System'
+
+@db_session
+def get_or_create_character(esi_instance,character_id):
+	try:
+		char = Character[character_id]
+		return char.to_dict()
+	except ObjectNotFound:
+		charname = esi_instance.character_name(character_id)
+		Character(character_id=character_id, name=charname)
+		return Character[character_id].to_dict()
+
+@db_session
+def get_or_create_location(esi_instance,location_id):
+	try:
+		loc = Location(location_id)
+		return loc.to_dict()
+	except ObjectNotFound:
+		loc = esi_instance.location_details(location_id)
+		Location(location_id=location_id, name=loc.name, system_id=loc.system_id)
+		get_or_create_system(loc.system_id)
+		return Location[location_id].to_dict()
+
+def get_or_create_system(esi_instance,system_id):
+	try:
+		system = System(system_id)
+		return system.to_dict()
+	except ObjectNotFound:
+		system = esi_instance.get_system_name(system_id)
+		System(system_id=system_id, name=system)
+		return System[system_id].to_dict()
+
+def update_contract_fluff(esi_instance,contract_id):
+	try:
+		contract = Contract[contract_id]
+		get_or_create_location(esi_instance,contract.start_location_id)
+		get_or_create_location(esi_instance,contract.end_location_id)
+		if contract.acceptor_id != 0:
+			get_or_create_character(esi_instance,contract.acceptor_id)
+		if contract.assignee_id != 0:
+			get_or_create_character(esi_instance,contract.assignee_id)
+		if contract.issuer_id != 0:
+			get_or_create_character(esi_instance,contract.issuer_id)
+	except ObjectNotFound:
 		return False

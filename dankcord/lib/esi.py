@@ -58,5 +58,36 @@ class ESI:
         else:
             return contracts.data
 
+    def get_system_name(self, system_id):
+        op = self.app.op['get_universe_systems_system_id'](
+            system_id=system_id
+        )
+        system = self.esi.request(op,raise_on_error=True)
+        return system.data.name
+
+    def location_details(self, location_id):
+        if location_id > 1000000000000: # it is a citadel
+            location_type = 'citadel'
+            op = self.app.op['get_universe_structures_structure_id'](
+                structure_id=location_id
+            )
+        else: # it is a station
+            location_type = 'station'
+            op = self.app.op['get_universe_stations_station_id'](
+                station_id=location_id
+            )
+        location = self.esi.request(op,raise_on_error=True)
+        if location_type = 'citadel':
+            system = location.data.system_id
+        else:
+            system = location.data.solar_system_id
+        details = {
+            location_id: location_id,
+            location_type: location_type,
+            system_id: system,
+            name: location.data.name
+        }
+        return details
+
     def personal_contracts(self):
         raise NotImplementedError
