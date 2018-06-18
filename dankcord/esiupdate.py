@@ -37,17 +37,18 @@ def get_contracts(corp):
                     newcontract[k] = v.v
                 else:
                     newcontract[k] = v
-            check_contract(newcontract)
+            check_contract(newcontract,corp)
         else:
             print('Not courier contract (%s)' % contract.type)
     return True
 
-def check_contract(contract):
+def check_contract(contract,esi_instance):
     print('Checking contract...')
     new_contract = False
     if not contract_status(contract['contract_id']):
         print('Contract not found in database, inserting...')
         add_contract(contract) # contract does not exist in the database, insert it
+        update_contract_fluff(esi_instance,contract['contract_id'])
         if contract['status'] not in ['finished_issuer','finished_contractor','finished','cancelled','deleted']:
             print('New unfinished contract, sending new message')
             new_contract = True
@@ -73,6 +74,7 @@ def check_contract(contract):
 
         print('Updating contract in database')
         update_contract(contract)
+        update_contract_fluff(esi_instance,contract['contract_id'])
     print('-------------------')
 
 
