@@ -28,9 +28,11 @@ def startbot(configpath="."):
             print("Couldn't find server, not starting contracts task. You should probably fix this.")
 
     async def check_for_messages():
-        if bot_is_ready = True:
+        if bot_is_ready == True:
             message = pop_message()
             print(message)
+        else:
+            print('Bot not ready, waiting...')
         await asyncio.sleep(1)
 
     @bot.event
