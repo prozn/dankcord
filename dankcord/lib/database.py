@@ -44,7 +44,7 @@ def contract_status(contract_id):
 		contract = Contract[contract_id]
 		return contract.status
 	except ObjectNotFound:
-		return false
+		return False
 
 @db_session
 def expiring_soon_sent(contract_id):
@@ -52,7 +52,7 @@ def expiring_soon_sent(contract_id):
 		contract = Contract[contract_id]
 		return contract.expiring_soon_sent
 	except ObjectNotFound:
-		return false
+		return False
 
 @db_session
 def add_contract(contract):
@@ -62,9 +62,9 @@ def add_contract(contract):
 def update_contract(contract):
 	try:
 		Contract[contract.contract_id].set(**contract)
-		return true
+		return True
 	except ObjectNotFound:
-		return false
+		return False
 
 @db_session
 def add_message(contract_id,reason):
