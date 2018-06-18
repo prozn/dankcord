@@ -140,7 +140,7 @@ def get_or_create_character(esi_instance,character_id):
 @db_session
 def get_or_create_location(esi_instance,location_id):
 	try:
-		loc = Location(location_id)
+		loc = Location[location_id]
 		return loc.to_dict()
 	except ObjectNotFound:
 		loc = esi_instance.location_details(location_id)
@@ -151,7 +151,7 @@ def get_or_create_location(esi_instance,location_id):
 @db_session
 def get_or_create_system(esi_instance,system_id):
 	try:
-		system = System(system_id)
+		system = System[system_id]
 		return system.to_dict()
 	except ObjectNotFound:
 		system = esi_instance.get_system_name(system_id)
