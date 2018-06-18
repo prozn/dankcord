@@ -36,7 +36,7 @@ def get_contracts(corp):
 
 def check_contract(contract):
     new_contract = False
-    if not contract_status(contract):
+    if not contract_status(contract.contract_id):
         print('Contract not found in database, inserting...')
         add_contract(contract) # contract does not exist in the database, insert it
         if contract.status not in list('finished_issuer','finished_contractor','finished','cancelled','deleted'):
