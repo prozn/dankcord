@@ -77,11 +77,13 @@ class ESI:
                 station_id=location_id
             )
         location = self.esi.request(op,raise_on_error=True)
+        print(location.data)
+        print(location.data.system_id)
         details = {
-            location_id: location_id,
-            location_type: location_type,
-            system_id: location.data['system_id'],
-            name: location.data.name
+            'location_id': location_id,
+            'location_type': location_type,
+            'system_id': location.data.system_id,
+            'name': location.data.name
         }
         return details
 
