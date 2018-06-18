@@ -28,6 +28,7 @@ class Contract(db.Entity):
 	title = Optional(str,255)
 	contract_type = Required(str, 50) # filter = "courier" only
 	volume = Optional(Decimal, 20, 2)
+	messages = Set('Messages')
 
 class Messages(db.Entity):
 	id = PrimaryKey(int, auto=True)
