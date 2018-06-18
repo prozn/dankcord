@@ -7,7 +7,7 @@ DB = Database()
 DB.bind(provider='sqlite', filename='database.sqlite', create_db=True)
 
 class Contract(DB.Entity):
-	contract_id = PrimaryKey(float)
+	contract_id = PrimaryKey(int)
 	acceptor_id = Optional(float) # monitor for changes
 	assignee_id = Optional(float) 
 	availability = Required(str,50) # filter = "personal" only
