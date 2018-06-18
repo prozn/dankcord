@@ -41,7 +41,7 @@ def get_contracts(corp):
             check_contract(newcontract)
         else:
             print('Not courier contract (%s)' % contract.type)
-            return True
+    return True
 
 def check_contract(contract):
     new_contract = False
