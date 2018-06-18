@@ -30,7 +30,11 @@ def get_contracts(corp):
     for contract in contracts:
         if contract.type == 'courier': # we only care about courier contracts
             contract['contract_type'] = contract['type']
-            del contract['type']
+            contract['date_accepted'] = contract['date_accepted'].v
+            contract['date_completed'] = contract['date_completed'].v
+            contract['date_expired'] = contract['date_expired'].v
+            contract['date_issued'] = contract['date_issued'].v
+            del contract['type'] #, contract['date_accepted'], contract['date_completed'], contract['date_expired'], contract['date_issued']
             print(contract)
             check_contract(contract)
 
