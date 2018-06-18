@@ -39,6 +39,8 @@ def get_contracts(corp):
                     newcontract[k] = v
             print(newcontract)
             check_contract(newcontract)
+        else:
+            print('Not courier contract (%s)' % contract.type)
             return True
 
 def check_contract(contract):
