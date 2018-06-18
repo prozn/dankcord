@@ -6,7 +6,9 @@ from .lib.database import *
 
 config = configparser.SafeConfigParser()
 
-def startbot():
+def startbot(configpath="."):
+    config.read("%s/config.ini" % configpath)
+
     command_prefix='!'
     bot = commands.Bot(command_prefix)
 
