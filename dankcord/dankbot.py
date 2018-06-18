@@ -37,6 +37,7 @@ def startbot(configpath="."):
         print(bot.user.name)
         print(bot.user.id)
         print('------')
+        bot.loop.create_task(check_for_messages())
 
     @bot.command()
     async def askdrake(ctx):
@@ -49,5 +50,4 @@ def startbot(configpath="."):
             await ctx.send(discord.utils.get(emojis, name='drakeno'))
 
 
-    bot.loop.create_task(check_for_messages())
     bot.run(config.get('discord','bot_token'))
