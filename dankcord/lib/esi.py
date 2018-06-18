@@ -83,13 +83,17 @@ class ESI:
             op = self.app.op['get_universe_stations_station_id'](
                 station_id=location_id
             )
+        if location_type == 'citadel':
+            system = location.data.solar_system_id
+        else:
+            system = location.data.system_id
         location = self.esi.request(op,raise_on_error=True)
         print(location.data)
         print(location.data.system_id)
         details = {
             'location_id': location_id,
             'location_type': location_type,
-            'system_id': location.data.system_id,
+            'system_id': system,
             'name': location.data.name
         }
         return details
