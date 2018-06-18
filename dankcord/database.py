@@ -26,7 +26,7 @@ class Contract(db.Entity):
 	contract_type = Required(str, 50)
 	volume = Optional(Decimal, 20, 2)
 
-	db.generate_mapping(create_tables=True)
+db.generate_mapping(create_tables=True)
 
 @db_session
 async def contract_exists(contract_id):
@@ -35,3 +35,8 @@ async def contract_exists(contract_id):
 		return true
 	except ObjectNotFound:
 		return false
+
+@db_session
+async def update_contract(contract_object):
+	return True
+	#
