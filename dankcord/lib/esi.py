@@ -77,7 +77,7 @@ class ESI:
                 station_id=location_id
             )
         location = self.esi.request(op,raise_on_error=True)
-        if location_type = 'citadel':
+        if location_type == 'citadel':
             system = location.data.system_id
         else:
             system = location.data.solar_system_id
