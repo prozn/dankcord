@@ -31,10 +31,11 @@ class Contract(DB.Entity):
 	messages = Set('Messages')
 	expiring_soon_sent = Required(bool,default=False)
 
-class Messages(DB.Entity):
+class Message(DB.Entity):
 	id = PrimaryKey(int, auto=True)
 	contract_id = Required(Contract)
 	reason = Required(str, 50)  # NEW, ACCEPTED, EXPIRING_SOON, COMPLETED, FAILED, REJECTED, DELETED
+	sent = Required(bool,default=False)
 
 DB.generate_mapping(create_tables=True)
 
@@ -42,10 +43,8 @@ DB.generate_mapping(create_tables=True)
 def contract_status(contract_id):
 	try:
 		contract = Contract[contract_id]
-		print(contract.status)
 		return contract.status
 	except ObjectNotFound:
-		print('contract not found')
 		return False
 
 @db_session
@@ -53,6 +52,13 @@ def expiring_soon_sent(contract_id):
 	try:
 		contract = Contract[contract_id]
 		return contract.expiring_soon_sent
+	except ObjectNotFound:
+		return False
+
+def update_expiring_soon(contract_id):
+	try:
+		Contract[contract_id].set(expiring_soon_sent=True)
+		return True
 	except ObjectNotFound:
 		return False
 
@@ -71,6 +77,17 @@ def update_contract(contract):
 @db_session
 def add_message(contract_id,reason):
 	if reason in ['NEW','IN_PROGRESS','EXPIRING_SOON','COMPLETED','EXPIRED']:
-		Messages(contract_id=Contract[contract_id], reason=reason)
+		Message(contract_id=Contract[contract_id], reason=reason)
 	else:
 		raise ValueError('Invalid reason code')
+
+@db_session
+def pop_message(delete=True):
+	mess = Message.select(lambda m: m.sent == True).order_by(lambda m: asc(m.id))[:1]
+	if len(mess) > 0:
+		item = mess[0]
+		if delete:
+			Message[mess.id].delete()
+		return item
+	else:
+		return False

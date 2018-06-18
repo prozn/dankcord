@@ -37,7 +37,6 @@ def get_contracts(corp):
                     newcontract[k] = v.v
                 else:
                     newcontract[k] = v
-            print(newcontract)
             check_contract(newcontract)
         else:
             print('Not courier contract (%s)' % contract.type)
@@ -74,6 +73,7 @@ def check_contract(contract):
 
         print('Updating contract in database')
         update_contract(contract)
+    print('-------------------')
 
 
 if __name__ == '__main__':

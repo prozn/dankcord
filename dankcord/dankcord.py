@@ -13,11 +13,8 @@ def main():
     console.setFormatter(formatter)
     logger.addHandler(console)
     if sys.argv[1] == "startbot":
-        from .dankbot import launchesi
         from .dankbot import startbot
-        print('Loading ESI')
-        launchesi()
-        print('ESI loaded, starting bot')
+        print('Starting bot...')
         startbot()
     elif sys.argv[1] == "esiupdate":
         from .esiupdate import start
@@ -27,3 +24,6 @@ def main():
         print('You need to specify startbot or esiupdate function as the first argument')
 
     print('Bot has ended....')
+
+if __name__ == '__main__':
+    main()
