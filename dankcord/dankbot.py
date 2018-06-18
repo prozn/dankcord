@@ -5,6 +5,7 @@ import configparser
 from .lib.database import *
 
 config = configparser.SafeConfigParser()
+bot_is_ready = False
 
 def startbot(configpath="."):
     config.read("%s/config.ini" % configpath)
@@ -27,8 +28,9 @@ def startbot(configpath="."):
             print("Couldn't find server, not starting contracts task. You should probably fix this.")
 
     async def check_for_messages():
-        message = pop_message()
-        print(message)
+        if bot_is_ready = True:
+            message = pop_message()
+            print(message)
         await asyncio.sleep(1)
 
     @bot.event
@@ -37,7 +39,7 @@ def startbot(configpath="."):
         print(bot.user.name)
         print(bot.user.id)
         print('------')
-        bot.loop.create_task(check_for_messages())
+        bot_is_ready = True
 
     @bot.command()
     async def askdrake(ctx):
@@ -49,5 +51,5 @@ def startbot(configpath="."):
         else:
             await ctx.send(discord.utils.get(emojis, name='drakeno'))
 
-
+    bot.loop.create_task(check_for_messages())
     bot.run(config.get('discord','bot_token'))
