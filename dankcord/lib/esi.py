@@ -49,7 +49,7 @@ class ESI:
         return character.data.name
 
     def id_name(self,id):
-        op = self.app.op['get_universe_names'](
+        op = self.app.op['post_universe_names'](
             ids=[id]
         )
         names = self.esi.request(op,raise_on_error=True)
