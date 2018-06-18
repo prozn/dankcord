@@ -29,7 +29,7 @@ def startbot(configpath="."):
     async def check_for_messages():
         message = pop_message()
         print(message)
-        await asyncio.sleep(60)
+        await asyncio.sleep(1)
 
     @bot.event
     async def on_ready():
