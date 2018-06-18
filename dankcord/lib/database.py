@@ -6,7 +6,7 @@ import asyncio
 DB = Database()
 DB.bind(provider='sqlite', filename='database.sqlite', create_db=True)
 
-class Contract(db.Entity):
+class Contract(DB.Entity):
 	contract_id = PrimaryKey(int)
 	acceptor_id = Optional(int) # monitor for changes
 	assignee_id = Optional(int) 
@@ -31,7 +31,7 @@ class Contract(db.Entity):
 	messages = Set('Messages')
 	expiring_soon_sent = Required(bool,default=False)
 
-class Messages(db.Entity):
+class Messages(DB.Entity):
 	id = PrimaryKey(int, auto=True)
 	contract_id = Required(Contract)
 	reason = Required(str, 50)  # NEW, ACCEPTED, EXPIRING_SOON, COMPLETED, FAILED, REJECTED, DELETED
