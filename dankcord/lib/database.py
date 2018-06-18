@@ -63,7 +63,7 @@ def add_contract(contract):
 @db_session
 def update_contract(contract):
 	try:
-		Contract[contract.contract_id].set(**contract)
+		Contract[contract['contract_id']].set(**contract)
 		return True
 	except ObjectNotFound:
 		return False
