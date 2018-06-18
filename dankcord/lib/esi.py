@@ -46,7 +46,14 @@ class ESI:
 
     def character_name(self, character_id):
         character = self.character_info(character_id)
-        return character.name
+        return character.data.name
+
+    def id_name(self,id):
+        op = self.app.op['get_universe_names'](
+            ids=[id]
+        )
+        names = self.esi.request(op,raise_on_error=True)
+        return names.data[0].name
 
     def corp_contracts(self, corporation_id, raw=False):
         op = self.app.op['get_corporations_corporation_id_contracts'](

@@ -37,8 +37,8 @@ class Message(DB.Entity):
 	reason = Required(str, 50)  # NEW, ACCEPTED, EXPIRING_SOON, COMPLETED, FAILED, REJECTED, DELETED
 	sent = Required(bool,default=False)
 
-class Character(DB.Entity):
-	character_id = PrimaryKey(int)
+class CharCorp(DB.Entity):
+	id = PrimaryKey(int)
 	name = Required(str,255)
 
 class Location(DB.Entity):
@@ -106,12 +106,12 @@ def pop_message():
 		return False
 
 @db_session
-def get_character_name(character_id):
+def get_charcorp_name(character_id):
 	try:
-		char = Character[character_id]
+		char = CharCorp[character_id]
 		return char.name
 	except ObjectNotFound:
-		return 'Unknown Character'
+		return 'Unknown Character or Corporation'
 
 def get_location_name(location_id):
 	try:
@@ -128,13 +128,13 @@ def get_system_name(system_id):
 		return 'Unknown System'
 
 @db_session
-def get_or_create_character(esi_instance,character_id):
+def get_or_create_charcorp(esi_instance,id):
 	try:
-		char = Character[character_id]
+		char = CharCorp[id]
 		return char.to_dict()
 	except ObjectNotFound:
-		charname = esi_instance.character_name(character_id)
-		Character(character_id=character_id, name=charname)
+		charname = esi_instance.id_name(id)
+		CharCorp(id=id, name=charname)
 		return Character[character_id].to_dict()
 
 @db_session
@@ -165,10 +165,10 @@ def update_contract_fluff(esi_instance,contract_id):
 		get_or_create_location(esi_instance,contract.start_location_id)
 		get_or_create_location(esi_instance,contract.end_location_id)
 		if contract.acceptor_id != 0:
-			get_or_create_character(esi_instance,contract.acceptor_id)
+			get_or_create_charcorp(esi_instance,contract.acceptor_id)
 		if contract.assignee_id != 0:
-			get_or_create_character(esi_instance,contract.assignee_id)
+			get_or_create_charcorp(esi_instance,contract.assignee_id)
 		if contract.issuer_id != 0:
-			get_or_create_character(esi_instance,contract.issuer_id)
+			get_or_create_charcorp(esi_instance,contract.issuer_id)
 	except ObjectNotFound:
 		return False
