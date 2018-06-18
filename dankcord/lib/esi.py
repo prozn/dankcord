@@ -16,7 +16,7 @@ class ESI:
     def _start(self):
         self.cache = FileCache(path=self.cache_path)
         self.esi_app = EsiApp(cache=self.cache, cache_prefix=self.prefix)
-        self.app = esi_app.get_latest_swagger
+        self.app = self.esi_app.get_latest_swagger
         self.security = EsiSecurity(
             app=self.app,
             redirect_uri='http://localhost/oauth-callback', # This doesnt matter
