@@ -27,7 +27,7 @@ def start(configpath="."):
 def get_contracts(corp):
     contracts = corp.esi.corp_contracts(config.get('corporation','corporation_id'))
     for contract in contracts.data:
-        print contract
+        print(contract)
         #check_contract(contract)
 
 def get_contracts_old():
