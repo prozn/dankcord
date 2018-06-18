@@ -50,7 +50,7 @@ class ESI:
         op = self.app.op['get_corporations_corporation_id_contracts'](
             corporation_id=corporation_id
         )
-        contracts = esi.request(op,raise_on_error=True)
+        contracts = self.esi.request(op,raise_on_error=True)
         return contracts
 
     def personal_contracts(self):
