@@ -25,7 +25,7 @@ def start(configpath="."):
             time.sleep(1)
 
 def get_contracts(corp):
-    contracts = corp.esi.corp_contracts(config.get('corporation','corporation_id'))
+    contracts = corp.corp_contracts(config.get('corporation','corporation_id'))
     for contract in contracts.data:
         print(contract)
         #check_contract(contract)
