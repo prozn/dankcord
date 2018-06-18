@@ -8,8 +8,8 @@ DB.bind(provider='sqlite', filename='database.sqlite', create_db=True)
 
 class Contract(DB.Entity):
 	contract_id = PrimaryKey(int)
-	acceptor_id = Optional(int, size=64, unsigned=True) # monitor for changes
-	assignee_id = Optional(int, size=64, unsigned=True)
+	acceptor_id = Optional(int, size=32, unsigned=True) # monitor for changes
+	assignee_id = Optional(int, size=32, unsigned=True)
 	availability = Required(str,50) # filter = "personal" only
 	collateral = Optional(Decimal, 20, 2)
 	date_accepted = Optional(datetime)
@@ -17,13 +17,13 @@ class Contract(DB.Entity):
 	date_expired = Optional(datetime)
 	date_issued = Required(datetime)
 	days_to_complete = Optional(int)
-	end_location_id = Optional(int, size=64, unsigned=True)
+	end_location_id = Optional(int, size=32, unsigned=True)
 	for_corporation = Optional(bool)
-	issuer_corporation_id = Optional(int, size=64, unsigned=True)
-	issuer_id = Optional(int, size=64, unsigned=True)
+	issuer_corporation_id = Optional(int, size=32, unsigned=True)
+	issuer_id = Optional(int, size=32, unsigned=True)
 	price = Optional(Decimal, 20, 2)
 	reward = Optional(Decimal, 20, 2)
-	start_location_id = Optional(int, size=64, unsigned=True)
+	start_location_id = Optional(int, size=32, unsigned=True)
 	status = Optional(str,50) # monitor for changes
 	title = Optional(str,255)
 	contract_type = Required(str, 50) # filter = "courier" only
