@@ -83,7 +83,7 @@ def add_message(contract_id,reason):
 
 @db_session
 def pop_message():
-	mess = Message.select(lambda m: m.sent == True).order_by(lambda m: m.id)[:1]
+	mess = Message.select(lambda m: m.sent == False).order_by(lambda m: m.id)[:1]
 	print(mess)
 	if len(mess) > 0:
 		item = mess[0]
