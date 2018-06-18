@@ -45,7 +45,7 @@ def check_contract(contract):
     if not contract_status(contract['contract_id']):
         print('Contract not found in database, inserting...')
         add_contract(contract) # contract does not exist in the database, insert it
-        if contract['status'] not in list('finished_issuer','finished_contractor','finished','cancelled','deleted'):
+        if contract['status'] not in ['finished_issuer','finished_contractor','finished','cancelled','deleted']:
             print('New unfinished contract, sending new message')
             new_contract = True
             add_message(contract['contract_id'],'NEW')
@@ -55,10 +55,10 @@ def check_contract(contract):
         if contract['status'] == 'in_progress':
             print('Sending accepted message...')
             add_message(contract['contract_id'], 'ACCEPTED')
-        elif contract['status'] in list ('finished_issuer','finished_contractor','finished'):
+        elif contract['status'] in ['finished_issuer','finished_contractor','finished']:
             print('Sending completed message...')
             add_message(contract['contract_id'], 'COMPLETED')
-        elif contract['status'] in list('cancelled','deleted'):
+        elif contract['status'] in ['cancelled','deleted']:
             print('Sending deleted message...')
             add_message(contract['contract_id'], 'DELETED')
         elif contract['status'] == 'rejected':
