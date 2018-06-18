@@ -26,17 +26,24 @@ class Contract(db.Entity):
 	contract_type = Required(str, 50)
 	volume = Optional(Decimal, 20, 2)
 
+class Messages(db.Entity):
+	id = PrimaryKey(int, auto=True)
+	contract_id = Required(Contract)
+	reason = Required(str, 50)  # NEW, ACCEPTED, EXPIRING_SOON, COMPLETED, EXPIRED
+
 db.generate_mapping(create_tables=True)
 
 @db_session
 async def contract_exists(contract_id):
 	try:
-		contract = Customer[contract_id]
+		contract = Contract[contract_id]
 		return true
 	except ObjectNotFound:
 		return false
 
 @db_session
-async def update_contract(contract_object):
-	return True
-	#
+async def update_contract(c):
+	if contract_exists(c.contract_id):
+		Contract[c.contract_id].set(**c)
+	else:
+		Contract(**c)
