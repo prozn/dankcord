@@ -5,7 +5,6 @@ import configparser
 from .lib.database import *
 
 config = configparser.SafeConfigParser()
-bot_is_ready = False
 
 def startbot(configpath="."):
     config.read("%s/config.ini" % configpath)
@@ -28,12 +27,11 @@ def startbot(configpath="."):
             print("Couldn't find server, not starting contracts task. You should probably fix this.")
 
     async def check_for_messages():
-        if bot_is_ready == True:
+        await bot.wait_until_ready()
+        while not bot.is_closed():
             message = pop_message()
             print(message)
-        else:
-            print('Bot not ready, waiting...')
-        await asyncio.sleep(1)
+            await asyncio.sleep(1)
 
     @bot.event
     async def on_ready():
@@ -41,7 +39,6 @@ def startbot(configpath="."):
         print(bot.user.name)
         print(bot.user.id)
         print('------')
-        bot_is_ready = True
 
     @bot.command()
     async def askdrake(ctx):
