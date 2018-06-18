@@ -39,7 +39,7 @@ class Messages(DB.Entity):
 DB.generate_mapping(create_tables=True)
 
 @db_session
-async def contract_status(contract_id):
+def contract_status(contract_id):
 	try:
 		contract = Contract[contract_id]
 		return contract.status
@@ -47,7 +47,7 @@ async def contract_status(contract_id):
 		return false
 
 @db_session
-async def expiring_soon_sent(contract_id):
+def expiring_soon_sent(contract_id):
 	try:
 		contract = Contract[contract_id]
 		return contract.expiring_soon_sent
@@ -55,11 +55,11 @@ async def expiring_soon_sent(contract_id):
 		return false
 
 @db_session
-async def add_contract(contract):
+def add_contract(contract):
 	Contract(**contract)
 
 @db_session
-async def update_contract(contract):
+def update_contract(contract):
 	try:
 		Contract[contract.contract_id].set(**contract)
 		return true
@@ -67,7 +67,7 @@ async def update_contract(contract):
 		return false
 
 @db_session
-async def add_message(contract_id,reason):
+def add_message(contract_id,reason):
 	if reason in list('NEW','IN_PROGRESS','EXPIRING_SOON','COMPLETED','EXPIRED'):
 		Messages(Contract[contract_id], reason)
 	else:
