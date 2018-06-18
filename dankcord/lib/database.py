@@ -28,7 +28,7 @@ class Contract(DB.Entity):
 	title = Optional(str,255)
 	contract_type = Required(str, 50) # filter = "courier" only
 	volume = Optional(Decimal, 20, 2)
-	messages = Set('Messages')
+	messages = Set('Message')
 	expiring_soon_sent = Required(bool,default=False)
 
 class Message(DB.Entity):
