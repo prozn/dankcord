@@ -29,7 +29,7 @@ def get_contracts(corp):
     #print(contracts)
     for contract in contracts:
         if contract.type == 'courier': # we only care about courier contracts
-
+            newcontract = {}
             for k,v in contract.items():
                 if k == 'type':
                     newcontract['contract_type'] = v
