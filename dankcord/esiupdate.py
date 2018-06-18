@@ -25,7 +25,7 @@ def start(configpath="."):
             time.sleep(1)
 
 def get_contracts(corp):
-    contracts = corp.corp_contracts(config.get('corporation','corporation_id'))
+    contracts = corp.corp_contracts(config.get('corporation','corporation_id'),True)
     print(contracts)
     for contract in contracts:
         if contract.type == 'courier': # we only care about courier contracts
