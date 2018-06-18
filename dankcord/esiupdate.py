@@ -44,6 +44,7 @@ def get_contracts(corp):
     return True
 
 def check_contract(contract):
+    print('Checking contract...')
     new_contract = False
     if not contract_status(contract['contract_id']):
         print('Contract not found in database, inserting...')

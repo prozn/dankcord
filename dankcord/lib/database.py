@@ -42,8 +42,10 @@ DB.generate_mapping(create_tables=True)
 def contract_status(contract_id):
 	try:
 		contract = Contract[contract_id]
+		print(contract.status)
 		return contract.status
 	except ObjectNotFound:
+		print('contract not found')
 		return False
 
 @db_session
