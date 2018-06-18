@@ -148,6 +148,7 @@ def get_or_create_location(esi_instance,location_id):
 		get_or_create_system(loc.system_id)
 		return Location[location_id].to_dict()
 
+@db_session
 def get_or_create_system(esi_instance,system_id):
 	try:
 		system = System(system_id)
@@ -157,6 +158,7 @@ def get_or_create_system(esi_instance,system_id):
 		System(system_id=system_id, name=system)
 		return System[system_id].to_dict()
 
+@db_session
 def update_contract_fluff(esi_instance,contract_id):
 	try:
 		contract = Contract[contract_id]
