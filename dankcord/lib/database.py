@@ -86,7 +86,8 @@ def pop_message():
 	mess = Message.select(lambda m: m.sent == False).order_by(lambda m: m.id)[:1]
 	if len(mess) > 0:
 		item = mess[0].to_dict(related_objects=True, with_collections=True)
+		cont = mess[0].contract_id.to_dict()
 		Message[mess[0].id].set(sent=True)
-		return item
+		return [item,cont]
 	else:
 		return False
