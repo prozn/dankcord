@@ -2,6 +2,7 @@ from esipy import EsiApp
 from esipy import EsiClient
 from esipy import EsiSecurity
 from esipy.cache import FileCache
+import asyncio
 
 class ESI:
     def __init__(self,client_id,secret_key,refresh_token,cache_path,prefix='esipy'):
@@ -35,23 +36,23 @@ class ESI:
         })
         self.security.refresh()
 
-    def character_info(self, character_id):
+    async def character_info(self, character_id):
         op = self.app.op['get_characters_character_id'](
             character_id=character_id
         )
         character = self.esi.request(op,raise_on_error=True)
         return character
 
-    def character_name(self, character_id):
+    async def character_name(self, character_id):
         character = self.character_info(character_id)
         return character.name
 
-    def corp_contracts(self, corporation_id):
+    async def corp_contracts(self, corporation_id):
         op = self.app.op['get_corporations_corporation_id_contracts'](
             corporation_id=corporation_id
         )
         contracts = self.esi.request(op,raise_on_error=True)
         return contracts
 
-    def personal_contracts(self):
+    async def personal_contracts(self):
         raise NotImplementedError

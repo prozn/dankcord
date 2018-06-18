@@ -1,10 +1,10 @@
 from pony.orm import *
 from decimal import Decimal
 from datetime import datetime
+import asyncio
 
-
-db = Database()
-db.bind(provider='sqlite', filename='database.sqlite', create_db=True)
+DB = Database()
+DB.bind(provider='sqlite', filename='database.sqlite', create_db=True)
 
 class Contract(db.Entity):
 	contract_id = PrimaryKey(int)
@@ -29,25 +29,46 @@ class Contract(db.Entity):
 	contract_type = Required(str, 50) # filter = "courier" only
 	volume = Optional(Decimal, 20, 2)
 	messages = Set('Messages')
+	expiring_soon_sent = Required(bool,default=False)
 
 class Messages(db.Entity):
 	id = PrimaryKey(int, auto=True)
 	contract_id = Required(Contract)
-	reason = Required(str, 50)  # NEW, ACCEPTED, EXPIRING_SOON, COMPLETED, EXPIRED
+	reason = Required(str, 50)  # NEW, ACCEPTED, EXPIRING_SOON, COMPLETED, FAILED, REJECTED, DELETED
 
-db.generate_mapping(create_tables=True)
+DB.generate_mapping(create_tables=True)
 
 @db_session
-async def contract_exists(contract_id):
+async def contract_status(contract_id):
 	try:
 		contract = Contract[contract_id]
+		return contract.status
+	except ObjectNotFound:
+		return false
+
+@db_session
+async def expiring_soon_sent(contract_id):
+	try:
+		contract = Contract[contract_id]
+		return contract.expiring_soon_sent
+	except ObjectNotFound:
+		return false
+
+@db_session
+async def add_contract(contract):
+	Contract(**contract)
+
+@db_session
+async def update_contract(contract):
+	try:
+		Contract[contract.contract_id].set(**contract)
 		return true
 	except ObjectNotFound:
 		return false
 
 @db_session
-async def update_contract(c):
-	if contract_exists(c.contract_id):
-		Contract[c.contract_id].set(**c)
+async def add_message(contract_id,reason):
+	if reason in list('NEW','IN_PROGRESS','EXPIRING_SOON','COMPLETED','EXPIRED'):
+		Messages(Contract[contract_id], reason)
 	else:
-		Contract(**c)
+		raise ValueError('Invalid reason code')
