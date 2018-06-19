@@ -39,16 +39,26 @@ def startbot(configpath="."):
         guild = discord.utils.get(bot.guilds, name='BBW.')
         channel = discord.utils.get(guild.text_channels, name='test')
         text = ""
+        e = discord.Embed()
         if message['reason'] == 'NEW':
-            e = discord.Embed(title='New contract received!')
+            #e = discord.Embed(title='New contract received!')
+            e.title = "New contract received!"
             e.add_field(name="From", value=get_location_system_name(message['contract']['start_location_id']), inline=True)
             e.add_field(name="To", value=get_location_system_name(message['contract']['end_location_id']), inline=True)
             e.add_field(name="Volume", value=format_number(message['contract']['volume']), inline=True)
             e.add_field(name="Collateral", value=format_money(message['contract']['collateral']), inline=True)
             e.add_field(name="Reward", value=format_money(message['contract']['reward']), inline=True)
             e.add_field(name="isk/m3", value=format_number(round(message['contract']['reward']/message['contract']['volume'],2)), inline=True)
+            e.add_field(name="Issued By", value=get_charcorp_name(message['contract']['issuer_id']), inline=True)
         elif message['reason'] == 'IN_PROGRESS':
-            return True
+            e = discord.Embed(title='Contract has been accepted by %s' % get_charcorp_name(message['contract']['acceptor_id']))
+            e.add_field(name="From", value=get_location_system_name(message['contract']['start_location_id']), inline=True)
+            e.add_field(name="To", value=get_location_system_name(message['contract']['end_location_id']), inline=True)
+            e.add_field(name="Volume", value=format_number(message['contract']['volume']), inline=True)
+            e.add_field(name="Collateral", value=format_money(message['contract']['collateral']), inline=True)
+            e.add_field(name="Reward", value=format_money(message['contract']['reward']), inline=True)
+            e.add_field(name="isk/m3", value=format_number(round(message['contract']['reward']/message['contract']['volume'],2)), inline=True)
+            e.add_field(name="Issued By", value=get_charcorp_name(message['contract']['issuer_id']), inline=True)
         elif message['reason'] == 'EXPIRING_SOON':
             return True
         elif message['reason'] == 'COMPLETED':
