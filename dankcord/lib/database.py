@@ -68,6 +68,7 @@ def expiring_soon_sent(contract_id):
 	except ObjectNotFound:
 		return False
 
+@db_session
 def update_expiring_soon(contract_id):
 	try:
 		Contract[contract_id].set(expiring_soon_sent=True)
@@ -115,6 +116,15 @@ def get_charcorp_name(character_id):
 	except ObjectNotFound:
 		return 'Unknown Character or Corporation'
 
+@db_session
+def get_location_system_name(location_id):
+	try:
+		loc = Location[location_id]
+		return get_system_name(loc.system_id)
+	except ObjectNotFound:
+		return 'Unknown Structure'
+
+@db_session
 def get_location_name(location_id):
 	try:
 		loc = Location[location_id]
@@ -122,6 +132,7 @@ def get_location_name(location_id):
 	except ObjectNotFound:
 		return 'Unknown Structure'
 
+@db_session
 def get_system_name(system_id):
 	try:
 		system = System[system_id]
