@@ -3,6 +3,7 @@ from discord.ext import commands
 import asyncio
 import configparser
 from .lib.database import *
+from .lib.utils import *
 
 config = configparser.SafeConfigParser()
 
@@ -42,10 +43,10 @@ def startbot(configpath="."):
             e = discord.Embed(title='New contract received!')
             e.add_field(name="From", value=get_location_system_name(message['contract']['start_location_id']), inline=True)
             e.add_field(name="To", value=get_location_system_name(message['contract']['end_location_id']), inline=True)
-            e.add_field(name="Volume", value=message['contract']['volume'], inline=True)
-            e.add_field(name="Collateral", value=message['contract']['collateral'], inline=True)
-            e.add_field(name="Reward", value=message['contract']['reward'], inline=True)
-            e.add_field(name="isk/m3", value=round(message['contract']['reward']/message['contract']['volume'],2), inline=True)
+            e.add_field(name="Volume", value=format_number(message['contract']['volume']), inline=True)
+            e.add_field(name="Collateral", value=format_money(message['contract']['collateral']), inline=True)
+            e.add_field(name="Reward", value=format_money(message['contract']['reward']), inline=True)
+            e.add_field(name="isk/m3", value=format_number(round(message['contract']['reward']/message['contract']['volume'],2)), inline=True)
         elif message['reason'] == 'IN_PROGRESS':
             return True
         elif message['reason'] == 'EXPIRING_SOON':
