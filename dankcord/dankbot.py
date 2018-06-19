@@ -30,7 +30,8 @@ def startbot(configpath="."):
         await bot.wait_until_ready()
         while not bot.is_closed():
             message = pop_message()
-            await process_message(message)
+            if message is not False:
+                await process_message(message)
             await asyncio.sleep(1)
 
     async def process_message(message):
