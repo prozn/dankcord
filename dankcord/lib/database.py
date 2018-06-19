@@ -100,8 +100,9 @@ def pop_message():
 	if len(mess) > 0:
 		item = mess[0].to_dict(related_objects=True, with_collections=True)
 		cont = mess[0].contract_id.to_dict()
+		item.contract_id = cont
 		Message[mess[0].id].set(sent=True)
-		return [item,cont]
+		return [item]
 	else:
 		return False
 
