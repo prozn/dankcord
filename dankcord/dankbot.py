@@ -30,8 +30,29 @@ def startbot(configpath="."):
         await bot.wait_until_ready()
         while not bot.is_closed():
             message = pop_message()
-            print(message)
+            await process_message(message)
             await asyncio.sleep(1)
+
+    async def process_message(message):
+        channel = discord.utils.get(guild.text_channels, name='test')
+        text = ""
+        if message['reason'] == 'NEW':
+            e = discord.Embed(title='New contract received!')
+            e.add_field(name="From", value=get_location_system_name(message['contract']['start_location_id']), inline=True)
+            e.add_field(name="To", value=get_location_system_name(message['contract']['end_location_id']), inline=True)
+            e.add_field(name="Volume", value=message['contract']['volume'], inline=True)
+            e.add_field(name="Collateral", value=message['contract']['collateral'], inline=True)
+            e.add_field(name="Reward", value=message['contract']['reward'], inline=True)
+            e.add_field(name="isk/m3", value=round(message['contract']['reward']/message['contract']['volume'],2), inline=True)
+        elif message['reason'] == 'IN_PROGRESS':
+        elif message['reason'] == 'EXPIRING_SOON':
+        elif message['reason'] == 'COMPLETED':
+        elif message['reason'] == 'EXPIRED':
+        else:
+            print('message type unknown')
+            return False
+
+        await channel.send(text, embed=e)
 
     @bot.event
     async def on_ready():

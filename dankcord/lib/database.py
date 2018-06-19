@@ -103,7 +103,7 @@ def pop_message():
 		item['contract'] = cont
 		del item['contract_id']
 		Message[mess[0].id].set(sent=True)
-		return [item]
+		return item
 	else:
 		return False
 
