@@ -45,9 +45,13 @@ def startbot(configpath="."):
             e.add_field(name="Reward", value=message['contract']['reward'], inline=True)
             e.add_field(name="isk/m3", value=round(message['contract']['reward']/message['contract']['volume'],2), inline=True)
         elif message['reason'] == 'IN_PROGRESS':
+            return True
         elif message['reason'] == 'EXPIRING_SOON':
+            return True
         elif message['reason'] == 'COMPLETED':
+            return True
         elif message['reason'] == 'EXPIRED':
+            return True
         else:
             print('message type unknown')
             return False
