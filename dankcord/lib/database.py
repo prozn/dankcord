@@ -90,7 +90,7 @@ def update_contract(contract):
 
 @db_session
 def add_message(contract_id,reason):
-	if reason in ['NEW','IN_PROGRESS','EXPIRING_SOON','COMPLETED','EXPIRED']:
+	if reason in ['NEW','IN_PROGRESS','EXPIRING_SOON','COMPLETED','EXPIRED', 'DELETED']:
 		Message(contract_id=Contract[contract_id], reason=reason)
 	else:
 		raise ValueError('Invalid reason code')
