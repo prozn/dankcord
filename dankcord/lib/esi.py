@@ -3,6 +3,18 @@ from esipy import EsiClient
 from esipy import EsiSecurity
 from esipy.cache import FileCache
 import asyncio
+import functools
+
+def esiexcept(function):
+    @functools.wraps(function)
+    def wrapper(*args, **kwargs):
+        try:
+            return function(*args, **kwargs)
+        except:
+            # log the error
+            # check if the error is a known one and re-raise if not
+            return False
+    return wrapper
 
 class ESI:
     def __init__(self,client_id,secret_key,refresh_token,cache_path,prefix='esipy'):
@@ -26,7 +38,7 @@ class ESI:
             secret_key=self.secret_key,
         )
         self.esi = EsiClient(
-            retry_requests=True,  # set to retry on http 5xx error (default False)
+            retry_requests=False,  # set to retry on http 5xx error (default False)
             headers={'User-Agent': 'Discord bot by Prozn: https://github.com/prozn/dankcord'},
             security=self.security
         )
@@ -37,6 +49,7 @@ class ESI:
         })
         self.security.refresh()
 
+    @esiexcept
     def character_info(self, character_id):
         op = self.app.op['get_characters_character_id'](
             character_id=character_id
@@ -48,6 +61,7 @@ class ESI:
         character = self.character_info(character_id)
         return character.data.name
 
+    @esiexcept
     def id_name(self,id):
         op = self.app.op['post_universe_names'](
             ids=[id]
@@ -55,6 +69,7 @@ class ESI:
         names = self.esi.request(op,raise_on_error=True)
         return names.data[0].name
 
+    @esiexcept
     def corp_contracts(self, corporation_id, raw=False):
         op = self.app.op['get_corporations_corporation_id_contracts'](
             corporation_id=corporation_id
@@ -65,6 +80,7 @@ class ESI:
         else:
             return contracts.data
 
+    @esiexcept
     def get_system_name(self, system_id):
         op = self.app.op['get_universe_systems_system_id'](
             system_id=system_id
@@ -72,6 +88,7 @@ class ESI:
         system = self.esi.request(op,raise_on_error=True)
         return system.data.name
 
+    @esiexcept
     def location_details(self, location_id):
         if location_id > 1000000000000: # it is a citadel
             location_type = 'citadel'
@@ -96,5 +113,6 @@ class ESI:
         }
         return details
 
+    @esiexcept
     def personal_contracts(self):
         raise NotImplementedError

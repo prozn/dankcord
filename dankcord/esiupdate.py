@@ -20,27 +20,30 @@ def start(configpath="."):
     )
     while True:
         if get_contracts(corp):
-            time.sleep(60)
+            time.sleep(300) # contracts are cached 5 minutes
         else:
-            time.sleep(1)
+            time.sleep(60) # there was an error getting contracts, try again in one minute
 
 def get_contracts(corp):
     contracts = corp.corp_contracts(config.get('corporation','corporation_id'))
-    #print(contracts)
-    for contract in contracts:
-        if contract.type == 'courier': # we only care about courier contracts
-            newcontract = {}
-            for k,v in contract.items():
-                if k == 'type':
-                    newcontract['contract_type'] = v
-                elif k[0:5] == 'date_':
-                    newcontract[k] = v.v
-                else:
-                    newcontract[k] = v
-            check_contract(newcontract,corp)
-        else:
-            print('Not courier contract (%s)' % contract.type)
-    return True
+
+    if !contracts:
+        return False
+    else:
+        for contract in contracts:
+            if contract.type == 'courier': # we only care about courier contracts
+                newcontract = {}
+                for k,v in contract.items():
+                    if k == 'type':
+                        newcontract['contract_type'] = v
+                    elif k[0:5] == 'date_':
+                        newcontract[k] = v.v
+                    else:
+                        newcontract[k] = v
+                check_contract(newcontract,corp)
+            else:
+                print('Not courier contract (%s)' % contract.type)
+        return True
 
 def check_contract(contract,esi_instance):
     print('Checking contract...')

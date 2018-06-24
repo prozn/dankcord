@@ -147,8 +147,11 @@ def get_or_create_charcorp(esi_instance,id):
 		return char.to_dict()
 	except ObjectNotFound:
 		charname = esi_instance.id_name(id)
-		CharCorp(id=id, name=charname)
-		return CharCorp[id].to_dict()
+		if !charname:
+			return False
+		else:
+			CharCorp(id=id, name=charname)
+			return CharCorp[id].to_dict()
 
 @db_session
 def get_or_create_location(esi_instance,location_id):
@@ -157,9 +160,12 @@ def get_or_create_location(esi_instance,location_id):
 		return loc.to_dict()
 	except ObjectNotFound:
 		loc = esi_instance.location_details(location_id)
-		Location(location_id=location_id, name=loc['name'], system_id=loc['system_id'])
-		get_or_create_system(esi_instance,loc['system_id'])
-		return Location[location_id].to_dict()
+		if !loc:
+			return False
+		else:
+			Location(location_id=location_id, name=loc['name'], system_id=loc['system_id'])
+			get_or_create_system(esi_instance,loc['system_id'])
+			return Location[location_id].to_dict()
 
 @db_session
 def get_or_create_system(esi_instance,system_id):
@@ -168,8 +174,11 @@ def get_or_create_system(esi_instance,system_id):
 		return system.to_dict()
 	except ObjectNotFound:
 		system = esi_instance.get_system_name(system_id)
-		System(system_id=system_id, name=system)
-		return System[system_id].to_dict()
+		if !system:
+			return False
+		else:
+			System(system_id=system_id, name=system)
+			return System[system_id].to_dict()
 
 @db_session
 def update_contract_fluff(esi_instance,contract_id):
