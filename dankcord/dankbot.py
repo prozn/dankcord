@@ -13,20 +13,6 @@ def startbot(configpath="."):
     command_prefix='!'
     bot = commands.Bot(command_prefix)
 
-    async def get_contracts():
-        print("I'm in the get contracts function")
-        await bot.wait_until_ready()
-        print("Bot is ready")
-        guild = discord.utils.get(bot.guilds, name='BBW.')
-        if guild is not None:
-            channel = discord.utils.get(guild.text_channels, name='test')
-            while not bot.is_closed():
-                print("Sending message...")
-                #await channel.send('This would be a new contract alert')
-                await asyncio.sleep(300) # task runs every 60 seconds
-        else:
-            print("Couldn't find server, not starting contracts task. You should probably fix this.")
-
     async def check_for_messages():
         await bot.wait_until_ready()
         while not bot.is_closed():
@@ -38,7 +24,7 @@ def startbot(configpath="."):
     async def process_message(message):
         guild = discord.utils.get(bot.guilds, name='BBW.')
         channel = discord.utils.get(guild.text_channels, name='test')
-        text = ""
+        text = "@everyone"
         e = discord.Embed()
         e.add_field(name="From", value=get_location_system_name(message['contract']['start_location_id']), inline=True)
         e.add_field(name="To", value=get_location_system_name(message['contract']['end_location_id']), inline=True)
