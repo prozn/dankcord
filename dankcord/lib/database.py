@@ -147,7 +147,7 @@ def get_or_create_charcorp(esi_instance,id):
 		return char.to_dict()
 	except ObjectNotFound:
 		charname = esi_instance.id_name(id)
-		if !charname:
+		if not charname:
 			return False
 		else:
 			CharCorp(id=id, name=charname)
@@ -160,7 +160,7 @@ def get_or_create_location(esi_instance,location_id):
 		return loc.to_dict()
 	except ObjectNotFound:
 		loc = esi_instance.location_details(location_id)
-		if !loc:
+		if not loc:
 			return False
 		else:
 			Location(location_id=location_id, name=loc['name'], system_id=loc['system_id'])
@@ -174,7 +174,7 @@ def get_or_create_system(esi_instance,system_id):
 		return system.to_dict()
 	except ObjectNotFound:
 		system = esi_instance.get_system_name(system_id)
-		if !system:
+		if not system:
 			return False
 		else:
 			System(system_id=system_id, name=system)

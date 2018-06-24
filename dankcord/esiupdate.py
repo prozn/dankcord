@@ -27,7 +27,7 @@ def start(configpath="."):
 def get_contracts(corp):
     contracts = corp.corp_contracts(config.get('corporation','corporation_id'))
 
-    if !contracts:
+    if not contracts:
         return False
     else:
         for contract in contracts:

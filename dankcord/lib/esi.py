@@ -59,6 +59,8 @@ class ESI:
 
     def character_name(self, character_id):
         character = self.character_info(character_id)
+        if not character:
+            return False
         return character.data.name
 
     @esiexcept
