@@ -1,5 +1,7 @@
 [discord]
 bot_token=
+server=
+channel=
 
 [esi]
 client_id=

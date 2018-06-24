@@ -22,8 +22,8 @@ def startbot(configpath="."):
             await asyncio.sleep(1)
 
     async def process_message(message):
-        guild = discord.utils.get(bot.guilds, name='BBW.')
-        channel = discord.utils.get(guild.text_channels, name='test')
+        guild = discord.utils.get(bot.guilds, name=config.get('discord','server'))
+        channel = discord.utils.get(guild.text_channels, name=config.get('discord','channel'))
         text = "@everyone"
         e = discord.Embed()
         e.add_field(name="From", value=get_location_system_name(message['contract']['start_location_id']), inline=True)
