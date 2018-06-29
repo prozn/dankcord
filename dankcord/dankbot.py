@@ -24,7 +24,7 @@ def startbot(configpath="."):
     async def process_message(message):
         guild = discord.utils.get(bot.guilds, name=config.get('discord','server'))
         channel = discord.utils.get(guild.text_channels, name=config.get('discord','channel'))
-        text = "@everyone"
+        text = ""
         e = discord.Embed()
         e.add_field(name="From", value=get_location_system_name(message['contract']['start_location_id']), inline=True)
         e.add_field(name="To", value=get_location_system_name(message['contract']['end_location_id']), inline=True)
@@ -34,10 +34,12 @@ def startbot(configpath="."):
         e.add_field(name="isk/m3", value=format_number(round(message['contract']['reward']/message['contract']['volume'],2)), inline=True)
         e.add_field(name="Issued By", value=get_charcorp_name(message['contract']['issuer_id']), inline=True)
         if message['reason'] == 'NEW':
+            text = "@everyone"
             e.title = "New contract received!"
         elif message['reason'] == 'IN_PROGRESS':
             e.title = "Contract has been accepted by %s" % get_charcorp_name(message['contract']['acceptor_id'])
         elif message['reason'] == 'EXPIRING_SOON':
+            text = "@everyone"
             e.title = "The following contact is expiring soon!"
         elif message['reason'] == 'COMPLETED':
             e.title = "The following contract has been completed by %s" % get_charcorp_name(message['contract']['acceptor_id'])

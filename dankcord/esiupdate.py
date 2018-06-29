@@ -61,7 +61,7 @@ def check_contract(contract,esi_instance):
         # status of the contract has changed - work out what!
         if contract['status'] == 'in_progress':
             print('Sending accepted message...')
-            add_message(contract['contract_id'], 'ACCEPTED')
+            add_message(contract['contract_id'], 'IN_PROGRESS')
         elif contract['status'] in ['finished_issuer','finished_contractor','finished']:
             print('Sending completed message...')
             add_message(contract['contract_id'], 'COMPLETED')
